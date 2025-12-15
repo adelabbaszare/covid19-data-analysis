@@ -37,7 +37,7 @@ pip install pandas numpy matplotlib seaborn
 ## Execution Steps
 1. Clone the Repository: Clone the GitHub repository for this project:
 ```bash
-git clone [[Your Repository Link]](https://github.com/adelabbaszare/Comprehensive-COVID-19-Pandemic-Data-Analysis-Project)
+git clone https://github.com/adelabbaszare/Comprehensive-COVID-19-Pandemic-Data-Analysis-Project
 cd Comprehensive-COVID-19-Pandemic-Data-Analysis-Project
 ```
 
