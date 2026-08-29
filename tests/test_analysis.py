@@ -39,6 +39,6 @@ def test_latest_country_data_uses_country_specific_latest_date():
     frame.loc[len(frame)] = [pd.Timestamp("2021-01-03"), "B", "P1", 7, 1, 3, 3]
     result = get_latest_country_data(frame)
     assert set(result["Country_Region"]) == {"A", "B"}
-    assert result.loc[
-        result["Country_Region"].eq("A"), "Date"
-    ].iloc[0] == pd.Timestamp("2021-01-02")
+    assert result.loc[result["Country_Region"].eq("A"), "Date"].iloc[0] == pd.Timestamp(
+        "2021-01-02"
+    )
