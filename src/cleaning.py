@@ -36,9 +36,7 @@ def clean_covid_data(df, numeric_columns=None, compute_active=True):
 
     required = {"Confirmed", "Deaths", "Recovered"}
     if compute_active and required.issubset(result.columns):
-        derived_active = (
-            result["Confirmed"] - result["Deaths"] - result["Recovered"]
-        )
+        derived_active = result["Confirmed"] - result["Deaths"] - result["Recovered"]
         if "Active" in result.columns:
             result["Active"] = result["Active"].combine_first(derived_active)
         else:
@@ -55,9 +53,7 @@ def duplicate_report(df):
         for column in ("Date", "Country_Region", "Province_State", "Admin2")
         if column in df.columns
     ]
-    key_duplicates = (
-        int(df.duplicated(subset=keys, keep=False).sum()) if keys else 0
-    )
+    key_duplicates = int(df.duplicated(subset=keys, keep=False).sum()) if keys else 0
     return {
         "exact_duplicate_rows": exact_duplicates,
         "key_duplicate_rows": key_duplicates,
