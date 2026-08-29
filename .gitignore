@@ -6,7 +6,11 @@ __pycache__/
 .Python
 .pytest_cache/
 .coverage
+coverage.xml
 htmlcov/
+.ruff_cache/
+.black_cache/
+.mypy_cache/
 
 # Virtual environments
 .venv/
@@ -36,7 +40,13 @@ data/interim/*
 data/processed/*
 !data/processed/.gitkeep
 
-# Generated exports
+# Generated exports / serialized data
 *.parquet
 *.feather
 *.pkl
+*.pickle
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
