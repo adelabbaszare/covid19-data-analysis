@@ -12,10 +12,6 @@ permissions:
 jobs:
   quality:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.10", "3.11", "3.12"]
 
     steps:
       - name: Checkout repository
@@ -24,7 +20,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.11"
           cache: pip
 
       - name: Install dependencies
@@ -34,12 +30,10 @@ jobs:
 
       - name: Show code-quality tool versions
         run: |
+          python --version
           python -m black --version
           python -m isort --version-number
           python -m ruff --version
-
-      - name: Show Black formatting diff
-        run: python -m black --diff src tests
 
       - name: Check formatting
         run: python -m black --check src tests
