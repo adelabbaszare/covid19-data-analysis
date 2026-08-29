@@ -68,7 +68,6 @@ def load_covid_data(data_dir):
         frames.append(frame)
 
     result = pd.concat(frames, ignore_index=True, sort=False)
-    return (
-        result.sort_values(["Date", "Country_Region"], na_position="last")
-        .reset_index(drop=True)
-    )
+    return result.sort_values(
+        ["Date", "Country_Region"], na_position="last"
+    ).reset_index(drop=True)
