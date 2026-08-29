@@ -38,7 +38,9 @@ def plot_country_trends(country_daily, country, metrics=None, figsize=(12, 6)):
     return ax
 
 
-def plot_top_countries(latest_country_data, metric="Confirmed", top_n=10, figsize=(10, 6)):
+def plot_top_countries(
+    latest_country_data, metric="Confirmed", top_n=10, figsize=(10, 6)
+):
     """Plot the top countries by a latest-available cumulative metric."""
     required = {"Country_Region", metric}
     missing = required.difference(latest_country_data.columns)
