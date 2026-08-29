@@ -18,7 +18,13 @@ def test_clean_covid_data_marks_negative_counts_missing_and_derives_active():
 
 
 def test_duplicate_handling_removes_exact_duplicates_only():
-    frame = pd.DataFrame({"Date": ["2021-01-01", "2021-01-01"], "Country_Region": ["A", "A"], "Confirmed": [1, 1]})
+    frame = pd.DataFrame(
+        {
+            "Date": ["2021-01-01", "2021-01-01"],
+            "Country_Region": ["A", "A"],
+            "Confirmed": [1, 1],
+        }
+    )
     report = duplicate_report(frame)
     assert report["exact_duplicate_rows"] == 1
     assert len(remove_exact_duplicates(frame)) == 1
