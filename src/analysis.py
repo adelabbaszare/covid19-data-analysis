@@ -43,7 +43,7 @@ def add_daily_changes(country_daily):
 
 
 def get_latest_country_data(df):
-    """Return the latest available country-level totals independently per country."""
+    """Return latest country-level totals independently per country."""
     country_daily = aggregate_country_daily(df)
     latest_dates = country_daily.groupby("Country_Region")["Date"].transform("max")
     return (
