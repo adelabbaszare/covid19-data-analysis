@@ -4,6 +4,7 @@ Implementation details live in the specialized schema, cleaning, analysis, and
 visualization modules. This facade keeps notebook imports stable while reducing
 coupling.
 """
+
 from pathlib import Path
 
 import pandas as pd
@@ -46,6 +47,7 @@ def discover_csv_files(data_dir):
         raise FileNotFoundError(f"Data directory does not exist: {path}")
     if not path.is_dir():
         raise NotADirectoryError(f"Expected a directory: {path}")
+
     files = sorted(path.glob("*.csv"))
     if not files:
         raise FileNotFoundError(f"No CSV files found in: {path}")
@@ -59,8 +61,10 @@ def load_covid_data(data_dir):
         frame = standardize_schema(pd.read_csv(file))
         frame["Source_File"] = file.name
         frame["Date"] = extract_date_from_filename(file)
+
         if frame["Date"].isna().all() and "Last_Update" in frame.columns:
             frame["Date"] = frame["Last_Update"].dt.normalize()
+
         frames.append(frame)
 
     result = pd.concat(frames, ignore_index=True, sort=False)
