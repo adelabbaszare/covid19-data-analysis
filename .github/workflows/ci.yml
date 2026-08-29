@@ -13,6 +13,7 @@ jobs:
   quality:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: ["3.10", "3.11", "3.12"]
 
@@ -36,6 +37,9 @@ jobs:
           python -m black --version
           python -m isort --version-number
           python -m ruff --version
+
+      - name: Show Black formatting diff
+        run: python -m black --diff src tests
 
       - name: Check formatting
         run: python -m black --check src tests
