@@ -1,1 +1,3 @@
-"""Utilities for the COVID-19 pandemic data analysis project."""
+"""Reusable components for the COVID-19 data analysis project."""
+
+__version__ = "0.3.0"
