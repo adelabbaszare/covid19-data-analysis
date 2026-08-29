@@ -1,4 +1,5 @@
 """Project-wide paths and analysis configuration."""
+
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
