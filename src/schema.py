@@ -65,9 +65,7 @@ def standardize_schema(df):
 
     if "Last_Update" in result.columns:
         result["Last_Update"] = pd.to_datetime(
-            result["Last_Update"],
-            errors="coerce",
-            utc=True,
+            result["Last_Update"], errors="coerce", utc=True
         ).dt.tz_localize(None)
 
     return result
@@ -93,8 +91,6 @@ def inspect_schema(files):
         "files_by_column": {
             key: sorted(value) for key, value in files_by_column.items()
         },
-        "column_dtypes": {
-            key: sorted(value) for key, value in column_dtypes.items()
-        },
+        "column_dtypes": {key: sorted(value) for key, value in column_dtypes.items()},
         "dates_from_filenames": dates,
     }
