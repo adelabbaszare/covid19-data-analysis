@@ -107,7 +107,7 @@ pytest -q
 
 ## 🧹 Code Quality
 
-The project uses Black, isort, and Ruff. CI checks formatting, import ordering, linting, and tests on Python 3.10, 3.11, and 3.12.
+The project uses Black, isort, and Ruff. CI runs a single quality job on Python 3.11 and checks formatting, import ordering, linting, and tests.
 
 ```bash
 black src tests
