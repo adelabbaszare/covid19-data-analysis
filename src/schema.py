@@ -1,4 +1,5 @@
 """Schema discovery and normalization for historical COVID-19 reports."""
+
 import re
 from pathlib import Path
 
@@ -15,8 +16,14 @@ COLUMN_ALIASES = {
 }
 
 NUMERIC_COLUMNS = (
-    "Confirmed", "Deaths", "Recovered", "Active",
-    "Incident_Rate", "Case_Fatality_Ratio", "Lat", "Long_",
+    "Confirmed",
+    "Deaths",
+    "Recovered",
+    "Active",
+    "Incident_Rate",
+    "Case_Fatality_Ratio",
+    "Lat",
+    "Long_",
 )
 
 
@@ -30,9 +37,12 @@ def extract_date_from_filename(file_path):
 
     match = re.search(r"(\d{4})[-_](\d{1,2})[-_](\d{1,2})", stem)
     if match:
-        parsed = pd.to_datetime("-".join(match.groups()), errors="coerce")
+        parsed = pd.to_datetime(
+            "-".join(match.groups()), errors="coerce"
+        )
         if not pd.isna(parsed):
             return parsed.normalize()
+
     return pd.NaT
 
 
@@ -50,13 +60,18 @@ def standardize_schema(df):
     result = df.copy()
     for alias, canonical in COLUMN_ALIASES.items():
         result = _coalesce_columns(result, canonical, alias)
+
     for column in NUMERIC_COLUMNS:
         if column in result.columns:
             result[column] = pd.to_numeric(result[column], errors="coerce")
+
     if "Last_Update" in result.columns:
         result["Last_Update"] = pd.to_datetime(
-            result["Last_Update"], errors="coerce", utc=True
+            result["Last_Update"],
+            errors="coerce",
+            utc=True,
         ).dt.tz_localize(None)
+
     return result
 
 
@@ -65,6 +80,7 @@ def inspect_schema(files):
     files = [Path(file) for file in files]
     if not files:
         raise ValueError("At least one CSV file is required.")
+
     files_by_column, column_dtypes, dates = {}, {}, {}
     for file in files:
         sample = pd.read_csv(file, nrows=100)
@@ -72,10 +88,15 @@ def inspect_schema(files):
         for column, dtype in sample.dtypes.items():
             files_by_column.setdefault(column, []).append(file.name)
             column_dtypes.setdefault(column, set()).add(str(dtype))
+
     return {
         "file_count": len(files),
         "columns": sorted(files_by_column),
-        "files_by_column": {k: sorted(v) for k, v in files_by_column.items()},
-        "column_dtypes": {k: sorted(v) for k, v in column_dtypes.items()},
+        "files_by_column": {
+            key: sorted(value) for key, value in files_by_column.items()
+        },
+        "column_dtypes": {
+            key: sorted(value) for key, value in column_dtypes.items()
+        },
         "dates_from_filenames": dates,
     }
