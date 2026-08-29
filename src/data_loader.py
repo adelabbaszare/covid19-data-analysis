@@ -1,7 +1,8 @@
 """CSV discovery and loading facade.
 
 Implementation details live in the specialized schema, cleaning, analysis, and
-visualization modules. This facade keeps notebook imports stable while reducing\ncoupling.
+visualization modules. This facade keeps notebook imports stable while reducing
+coupling.
 """
 from pathlib import Path
 
@@ -63,4 +64,7 @@ def load_covid_data(data_dir):
         frames.append(frame)
 
     result = pd.concat(frames, ignore_index=True, sort=False)
-    return (\n        result.sort_values(["Date", "Country_Region"], na_position="last")\n        .reset_index(drop=True)\n    )
+    return (
+        result.sort_values(["Date", "Country_Region"], na_position="last")
+        .reset_index(drop=True)
+    )
