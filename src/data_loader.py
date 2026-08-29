@@ -1,7 +1,7 @@
 """CSV discovery and loading facade.
 
-Implementation details live in the specialized schema, cleaning, and analysis
-modules. This facade keeps the notebook imports stable while reducing coupling.
+Implementation details live in the specialized schema, cleaning, analysis, and
+visualization modules. This facade keeps notebook imports stable while reducing coupling.
 """
 from pathlib import Path
 
@@ -21,8 +21,6 @@ from .cleaning import (
 )
 from .schema import extract_date_from_filename, inspect_schema, standardize_schema
 
-
-# Re-exported for backwards compatibility with the notebook.
 __all__ = [
     "discover_csv_files",
     "extract_date_from_filename",
