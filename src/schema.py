@@ -37,9 +37,7 @@ def extract_date_from_filename(file_path):
 
     match = re.search(r"(\d{4})[-_](\d{1,2})[-_](\d{1,2})", stem)
     if match:
-        parsed = pd.to_datetime(
-            "-".join(match.groups()), errors="coerce"
-        )
+        parsed = pd.to_datetime("-".join(match.groups()), errors="coerce")
         if not pd.isna(parsed):
             return parsed.normalize()
 
