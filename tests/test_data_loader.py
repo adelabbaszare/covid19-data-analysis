@@ -38,14 +38,8 @@ def test_standardize_schema_merges_historical_column_names():
 
 
 def test_extract_date_from_filename():
-    assert (
-        str(extract_date_from_filename("01-02-2021.csv").date())
-        == "2021-01-02"
-    )
-    assert (
-        str(extract_date_from_filename("2021-01-03.csv").date())
-        == "2021-01-03"
-    )
+    assert str(extract_date_from_filename("01-02-2021.csv").date()) == "2021-01-02"
+    assert str(extract_date_from_filename("2021-01-03.csv").date()) == "2021-01-03"
     assert pd.isna(extract_date_from_filename("unknown.csv"))
 
 
@@ -93,9 +87,7 @@ def test_cleaning_and_duplicate_policy():
 def test_country_time_series_and_latest_data():
     df = pd.DataFrame(
         {
-            "Date": pd.to_datetime(
-                ["2021-01-01", "2021-01-01", "2021-01-02"]
-            ),
+            "Date": pd.to_datetime(["2021-01-01", "2021-01-01", "2021-01-02"]),
             "Country_Region": ["A", "A", "A"],
             "Province_State": ["P1", "P2", "P1"],
             "Confirmed": [10, 5, 20],
