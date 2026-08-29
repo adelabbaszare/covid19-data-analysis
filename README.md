@@ -1,4 +1,6 @@
-# 🦠 Comprehensive COVID-19 Pandemic Data Analysis
+# 🦠 COVID-19 Pandemic Data Analysis
+
+![COVID-19 Pandemic Data Analysis](./COVID-19-Analysis.jpg)
 
 A reproducible Python project for loading, standardizing, cleaning, and analyzing historical COVID-19 datasets.
 
