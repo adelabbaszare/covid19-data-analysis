@@ -1,7 +1,5 @@
 """Reusable country-level and time-series analysis functions."""
 
-import pandas as pd
-
 
 def aggregate_country_daily(df):
     """Aggregate administrative records into one row per country and date."""
