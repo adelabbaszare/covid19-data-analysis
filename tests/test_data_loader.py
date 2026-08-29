@@ -1,7 +1,9 @@
 import pandas as pd
+import pytest
 
 from src.analysis import add_daily_changes, aggregate_country_daily, get_latest_country_data
 from src.cleaning import clean_covid_data, duplicate_report, remove_exact_duplicates
+from src.data_loader import discover_csv_files, load_covid_data
 from src.schema import extract_date_from_filename, standardize_schema
 
 
@@ -25,6 +27,21 @@ def test_extract_date_from_filename():
     assert str(extract_date_from_filename("01-02-2021.csv").date()) == "2021-01-02"
     assert str(extract_date_from_filename("2021-01-03.csv").date()) == "2021-01-03"
     assert pd.isna(extract_date_from_filename("unknown.csv"))
+
+
+def test_discover_and_load_csv_files(tmp_path):
+    data = pd.DataFrame({"Country_Region": ["A"], "Confirmed": [10]})
+    data.to_csv(tmp_path / "01-02-2021.csv", index=False)
+    files = discover_csv_files(tmp_path)
+    assert len(files) == 1
+    result = load_covid_data(tmp_path)
+    assert result.loc[0, "Source_File"] == "01-02-2021.csv"
+    assert result.loc[0, "Date"] == pd.Timestamp("2021-01-02")
+
+
+def test_empty_data_directory_is_rejected(tmp_path):
+    with pytest.raises(FileNotFoundError):
+        discover_csv_files(tmp_path)
 
 
 def test_cleaning_and_duplicate_policy():
@@ -57,10 +74,8 @@ def test_country_time_series_and_latest_data():
     daily = aggregate_country_daily(df)
     assert len(daily) == 2
     assert daily.loc[daily["Date"] == pd.Timestamp("2021-01-01"), "Confirmed"].iloc[0] == 15
-
     changes = add_daily_changes(daily)
     assert changes.loc[changes["Date"] == pd.Timestamp("2021-01-02"), "New_Confirmed"].iloc[0] == 5
-
     latest = get_latest_country_data(df)
     assert len(latest) == 1
     assert latest.iloc[0]["Date"] == pd.Timestamp("2021-01-02")
